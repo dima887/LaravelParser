@@ -50,15 +50,19 @@
                         <p class="card-text">{{$parser->description}}</p>
                         <p class="card-text"><small class="text-muted">{{$parser->date}}</small></p>
                         <a href="{{route('ad.show', ['id' => $parser->id])}}" class="btn btn-primary">Просмотр</a>
+                        @auth
                         <a href="{{route('ad.edit', ['id' => $parser->id])}}">
                             <button type="button" class="btn btn-block btn-info"
                                     wfd-id="544">Редактировать</button></a>
+                        @endauth
+                        @auth
                         <form class="mt-1" action="{{route('ad.delete', ['id' => $parser->id])}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-block btn-danger"
                                     wfd-id="44" value="submit">Удалить</button>
                         </form>
+                        @endauth
 
                     </div>
                 </div>
