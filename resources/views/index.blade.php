@@ -30,7 +30,7 @@
         </div>
         <div class="row">
         @foreach($parsers as $parser)
-            <div class="col-4">
+            <div class="col-12 col-md-6 col-lg-4">
                 <div class="card" style="width: 18rem;">
                     <img src="{{$parser->image}}" class="card-img-top" alt="Нет изображения">
                     <div class="card-body">
