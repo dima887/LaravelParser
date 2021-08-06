@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\AdCreated;
 use App\Filters\ApartmentFilter;
 use App\Http\Repositories\ParserRepository;
 use App\Http\Requests\AddAdApartmentRequest;
@@ -51,13 +52,14 @@ class HomeController extends Controller
      */
     public function store(AddAdApartmentRequest $request, $id)
     {
-        dispatch(new MailNewAdApartmentJob($id));
-
         $data = $request->all();
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store("app/apartment");
         }
         Apartment::create($data);
+
+        //dispatch(new MailNewAdApartmentJob($id));
+        event(new AdCreated($id));
 
         return redirect()->route('home')->with('success', 'Объявление добавлено');
     }

@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\AdCreated;
+use App\Listeners\NewAdEmailNotification;
+use App\Models\Apartment;
+use App\Observers\ApartmentObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -18,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        AdCreated::class => [
+            NewAdEmailNotification::class,
+        ],
     ];
 
     /**
@@ -27,6 +33,6 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Apartment::observe(new ApartmentObserver());
     }
 }

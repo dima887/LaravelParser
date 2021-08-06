@@ -18,15 +18,17 @@ class MailNewAdApartmentJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $id;
+    protected $apartment;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($id)
+    public function __construct($id, $apartment)
     {
         $this->id = $id;
+        $this->apartment = $apartment;
     }
 
     /**
@@ -37,6 +39,6 @@ class MailNewAdApartmentJob implements ShouldQueue
     public function handle()
     {
         $email = User::find($this->id);
-        Mail::to($email->email)->send(new AddAdNewApartmentMail());
+        Mail::to($email->email)->send(new AddAdNewApartmentMail($this->apartment));
     }
 }

@@ -18,7 +18,6 @@ class AddAdNewApartmentMail extends Mailable
      */
     public function __construct()
     {
-        //
     }
 
     /**
