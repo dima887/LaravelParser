@@ -19,7 +19,7 @@ class ParserApartmentController extends Controller
     }
 
     /**
-     * Parser information
+     * ParserAd information
      */
     public function infoParser()
     {

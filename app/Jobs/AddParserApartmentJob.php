@@ -2,8 +2,8 @@
 
 namespace App\Jobs;
 
+use App\Facades\ParserService;
 use App\Models\Apartment;
-use App\Models\Parser\ApartmentParser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -35,9 +35,7 @@ class AddParserApartmentJob implements ShouldQueue
      */
     public function handle()
     {
-        $parserApartment = new ApartmentParser();
-        $parserUrlsPaginate = $parserApartment->getPaginate($this->start, $this->end);
-        $parserApartment = $parserApartment->getParserApartment($parserUrlsPaginate);
+        $parserApartment = ParserService::getContent($this->start, $this->end);
         $count = count($parserApartment['image']);
         for ($i = 0; $i < $count; $i++) {
             Apartment::create([
